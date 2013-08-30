@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -15,9 +16,12 @@ import com.ivanjunckes.entity.Order;
 public class ListOrderResourceClient {
 	public static void main(String[] args) {
 		Client orderClient = ClientBuilder.newClient();
-		Response response = orderClient.target("http://localhost:8082/rest-client-api-example/resources/orders")
-				.request(MediaType.APPLICATION_JSON)
-				.get();
+		
+		WebTarget target = orderClient.target("http://localhost:8082/rest-client-api-example/resources/orders");
+		Response response = target
+				 				.request(MediaType.APPLICATION_JSON)
+				 				.get();
+		
 		
 		if(response.getStatus() == Status.OK.getStatusCode()){
 			List<Order> orders = response.readEntity(new GenericType<List<Order>>() {});
